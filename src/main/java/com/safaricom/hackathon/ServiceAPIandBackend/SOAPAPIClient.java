@@ -1,6 +1,10 @@
 package com.safaricom.hackathon.ServiceAPIandBackend;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.xml.rpc.ServiceException;
@@ -55,6 +59,47 @@ public class SOAPAPIClient {
 						System.out.println("TPlayer tpsFullName: "+tpsFullName);
 						System.out.println("TPlayer tpsFirstName: "+tpsFirstName);
 						System.out.println("TPlayer tpsLastName: "+tpsLastName);
+						
+						DatabaseConnector databaseConnector = new DatabaseConnector();
+						Connection conn = databaseConnector.getConn();
+						
+						String insertSQL_voucher  = "INSERT INTO players(id,s_name,fullname,first_name,last_name) "
+								+ "values(?,?,?,?,?)";
+						PreparedStatement preparedStatement_voucher  ;
+						try {
+							preparedStatement_voucher   = conn.prepareStatement(insertSQL_voucher);
+							preparedStatement_voucher.setInt(1, tpsId);		
+							preparedStatement_voucher.setString(2, tpsName);	
+							preparedStatement_voucher.setString(3, tpsFullName);	
+							preparedStatement_voucher.setString(4, tpsFirstName);	
+							preparedStatement_voucher.setString(5, tpsLastName);	
+													
+							preparedStatement_voucher.executeUpdate();		
+							
+							try {
+				        		Functions.writeToFile("access.log", "Executed. Player details added to the database");
+					        }
+					        catch(IOException ex) {
+					        	ex.printStackTrace();
+					        }
+							catch(NullPointerException e){
+								e.printStackTrace();
+							}
+							           
+				            
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							try {
+				        		Functions.writeToFile("access.log","SQL Exception: "+e.getMessage().toString());
+					        }
+							catch(IOException ex) {
+					        	ex.printStackTrace();
+					        }
+							catch(NullPointerException ex){
+								ex.printStackTrace();
+							}
+						}
 						break;
 					}					
 		        }

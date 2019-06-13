@@ -29,13 +29,13 @@ public class RestfulAPIClient {
 	public static void main(String[] args) {
 		
 		//Get all employees
-		JSONArray allEmployeesArray = getAllEmployees();
+		//JSONArray allEmployeesArray = getAllEmployees();
 		
 		//Save employee details to the database if employee salary is greater than 1000 and age is greater than 25
-		saveEmployeestoDB();
+		//saveEmployeestoDB();
 		
 		//Create employee
-		createEmployee();
+		//createEmployee();
 		
 		//Update employee
 		updateEmployee();

@@ -24,10 +24,7 @@ public class LeftRotation {
 	    for(i=0;i<n;i++)
 	    { 
 	        a_[i] = sc.nextInt();
-	    }
-	
-		
-        
+	    }        
 			
         rotLeft(a_, k);
            
@@ -43,8 +40,9 @@ public class LeftRotation {
 	    }
 	    
         int temp;   
+        //1,2,3,4,5 2
         
-        for(int i = 0; i < d; i++){
+        for(int i = 0; i < d; i++){ 
         	temp=a[0];
             for(int j = 0; j < sizeOfArray-1; j++)
             {
